@@ -5,17 +5,15 @@ var express = require("express"),
     mongoose = require("mongoose");
 
 // Connect to the database you set up
-mongoose.connect("mongodb://localhost/top-5");
+// mongoose.connect("mongodb://localhost/top-5");
+
+mongoose.connect(
+  process.env.MONGOLAB_URI ||
+  process.env.MONGOHQ_URL ||
+  "mongodb://localhost/top-5"
+);
 
 var List = require('./models/list');
-
-// mongoose.connect(
-//   process.env.MONGOLAB_URI ||
-//   process.env.MONGOHQ_URL ||
-//   "mongodb://localhost/top-5"
-// );
-
-var User = require("./models/list");
 
 app.all("/*", function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
