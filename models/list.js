@@ -8,6 +8,6 @@ var ListSchema = new Schema({
   username: String
 });
 
-var List = mongoose.model('List', UserSchema);
+var List = mongoose.model('List', ListSchema);
 
 module.exports = List;
