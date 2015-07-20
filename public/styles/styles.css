@@ -17,7 +17,7 @@ body {
 }
 
 #new-list {
-	position:absolute;
+	position: fixed;
 	bottom: 15px;
 	right: 15px;
 }

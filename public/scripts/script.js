@@ -4,6 +4,11 @@ $(function() {
 	console.log(_) // UNDERSCORE IS WORKING!
 	console.log("Ready to code!");
 
+	var $listContainer = $("#list-container");
+
+	var template = _.template($("#list-template").html());
+
+
 	var lists = [
 		{
 			title: "Greatest Albums of All Time",
@@ -27,8 +32,12 @@ $(function() {
 			itemFive: "Item Five",
 			thumbsUp: 12,
 			forks: 6,
-			Author: "user name"
+			Author: "user's name"
 		}
 	];
+
+	_.each(lists, function(foundList) {
+		$listContainer.append(template(foundList));
+	});
 
 });
