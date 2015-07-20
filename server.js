@@ -8,6 +8,11 @@ var express = require("express"),
 // mongoose.connect("mongodb://localhost/test");
 // var User = require('./models/list');
 
+app.all('/*', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  next();
+});
+
 // tell app to use bodyParser middleware
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -22,7 +27,8 @@ app.get('/', function(req, res) {
 var lists = [
 	{
 		title: "Greatest Albums of All Time",
-		category: "Music",
+		date: "00/00/0000",
+		genre: "All",
 		itemOne: "Sgt. Pepper's Lonely Hearts Club Band - The Beatles",
 		itemTwo: "Pet Sounds - The Beach Boys",
 		itemThree: "What’s Going On - Marvin Gaye",
@@ -30,19 +36,20 @@ var lists = [
 		itemFive: "Thriller - Michael Jackson",
 		thumbsUp: 12,
 		forks: 6,
-		Author: "henryfreel"
+		author: "henryfreel"
 	},
 	{
 		title: "Here is another title",
-		category: "some other category",
+		date: "00/00/0000",
+		genre: "All",
 		itemOne: "Item One",
 		itemTwo: "Item Two",
 		itemThree: "Item Three",
 		itemFour: "Item Four",
 		itemFive: "Item Five",
-		thumbsUp: 12,
-		forks: 6,
-		Author: "user's name"
+		thumbsUp: 32,
+		forks: 11,
+		author: "user's name"
 	}
 ];
 

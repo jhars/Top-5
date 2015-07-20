@@ -32,27 +32,26 @@
 
     <!-- Post Forms Modal -->
     <div class="container">
-      <div id="add-post-modal" class="col-lg-8 col-md-offset-2 modal fade">
+      <div id="add-list-modal" class="col-lg-8 col-md-offset-2 modal fade">
         <div class="modal-dialog">
           <div class="modal-content">
 
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title">Add New Post</h4>
+              <h4 class="modal-title">Add New List</h4>
             </div>
 
-            <form id="new-post-form">
+            <form id="new-list-form">
               <div class="modal-body">
 
-                  <div class="form-group" id="post-name-group">
-                    <input class="form-control" id="post-name" placeholder="What's your name?">
-                    <span id="name-error" class="help-block collapse">&nbsp;We need to know who you are!</span>
+                  <div class="form-group" id="list-title-group">
+                    <input class="form-control" id="list-title" placeholder="Ex: Greatest Rock Albums...">
+                    <span id="title-error" class="help-block collapse">&nbsp;This list needs a title!</span>
                   </div>
 
                   <div class="form-group" id="post-body-group">
-                    <textarea class="form-control" rows="4" id="post-body" placeholder="Write a little something that you're thinking about..."></textarea>
-                    <span id="body-error" class="help-block collapse">&nbsp;Don't you want to write something?</span>
-                    <span id="body-help" class="help-block">&nbsp;Control + Enter will submit your post</span>
+                    <input class="form-control" id="list-genre" placeholder="Ex: Greatest Rock Albums...">
+                    <span id="body-error" class="help-block collapse">&nbsp;This list needs a genre!</span>
                   </div>
 
               </div>
@@ -60,7 +59,7 @@
               <div class="modal-footer">
                 <div class="form-group">
                   <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                  <button type="submit" id="publish-post" class="btn btn-primary">Publish Post</button>
+                  <button type="submit" id="publish-list" class="btn btn-primary">Publish List</button>
                 </div>
               </div>
             </form>
@@ -68,7 +67,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> <!-- End of Modal -->
 
     <div class="container" id="list-container">
 
@@ -81,45 +80,46 @@
         </form>
       </div> -->
 
-      <div class="row">
+    </div> <!-- End of Container -->
 
+    <button type="button" class="btn btn-primary" id="new-list">
+      <span data-toggle="modal" data-target="#add-list-modal" class="glyphicon glyphicon-plus" aria-hidden="true"></span> &nbspNew Top 5
+    </button>
+
+    <!-- SCRIPTS -->
+
+    <script type="text/template" id="list-template">
+      <div class="row">
         <div class="col-md-offset-2 col-md-8">
           <div class="panel panel-default">
 
             <div class="panel-heading">
-              <p class="panel-title"><span class="top-five">Top 5</span> Greatest Albums of All Time</p>
-              <p class="list-date">January 5th 2:00 PM</p>
+              <p class="panel-title"><span class="top-five">Top 5</span> <%= title %> - <%= genre %></p>
+              <p class="list-date"><%= date %></p>
             </div>
 
             <!-- List group -->
              <ul class="list-group">
-               <li class="list-group-item"><div class="number">1</div>Cras justo odio</li>
-               <li class="list-group-item"><div class="number">2</div>Dapibus ac facilisis in</li>
-               <li class="list-group-item"><div class="number">3</div>Morbi leo risus</li>
-               <li class="list-group-item"><div class="number">4</div>Porta ac consectetur ac</li>
-               <li class="list-group-item"><div class="number">5</div>Vestibulum at eros</li>
+               <li class="list-group-item"><div class="number">1</div><%= itemOne %></li>
+               <li class="list-group-item"><div class="number">2</div><%= itemTwo %></li>
+               <li class="list-group-item"><div class="number">3</div><%= itemThree %></li>
+               <li class="list-group-item"><div class="number">4</div><%= itemFour %></li>
+               <li class="list-group-item"><div class="number">5</div><%= itemFive %></li>
              </ul>
 
              <div class="panel-footer">
                <div class="footer-content">
-                <p class="thumbs-up-counter"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>&nbsp&nbsp<span class="num-thumbs-up">0</span> Thumbs Up</p>
-                <p class="fork-counter"><span class="glyphicon glyphicon-random" aria-hidden="true"></span>&nbsp&nbsp<span class="num-forks">0</span> Forks</p>
-                <p class="username"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> &nbsphenryfreel</p>
+                <p class="thumbs-up-counter"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>&nbsp&nbsp<span class="num-thumbs-up"><%= thumbsUp %></span> Thumbs Up</p>
+                <p class="fork-counter"><span class="glyphicon glyphicon-random" aria-hidden="true"></span>&nbsp&nbsp<span class="num-forks"><%= forks %></span> Forks</p>
+                <p class="username"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> &nbsp <%= author %></p>
                </div>
              </div>
 
           </div>
         </div>
+      </div>
+    </script>
 
-      </div> <!-- End of Row -->
-
-    </div> <!-- End of Container -->
-
-    <button type="button" class="btn btn-primary" id="new-list">
-      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> &nbspNew Top 5
-    </button>
-
-    <!-- SCRIPTS -->
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <!-- Latest compiled and minified JavaScript for Bootstrap -->
@@ -134,38 +134,6 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-
-    <script type="text/template" id="list-template">
-      <div class="row">
-        <div class="col-md-offset-2 col-md-8">
-          <div class="panel panel-default">
-
-            <div class="panel-heading">
-              <p class="panel-title"><span class="top-five">Top 5</span> Greatest Albums of All Time</p>
-              <p class="list-date">January 5th 2:00 PM</p>
-            </div>
-
-            <!-- List group -->
-             <ul class="list-group">
-               <li class="list-group-item"><div class="number">1</div>Cras justo odio</li>
-               <li class="list-group-item"><div class="number">2</div>Dapibus ac facilisis in</li>
-               <li class="list-group-item"><div class="number">3</div>Morbi leo risus</li>
-               <li class="list-group-item"><div class="number">4</div>Porta ac consectetur ac</li>
-               <li class="list-group-item"><div class="number">5</div>Vestibulum at eros</li>
-             </ul>
-
-             <div class="panel-footer">
-               <div class="footer-content">
-                <p class="thumbs-up-counter"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>&nbsp&nbsp<span class="num-thumbs-up">0</span> Thumbs Up</p>
-                <p class="fork-counter"><span class="glyphicon glyphicon-random" aria-hidden="true"></span>&nbsp&nbsp<span class="num-forks">0</span> Forks</p>
-                <p class="username"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> &nbsphenryfreel</p>
-               </div>
-             </div>
-
-          </div>
-        </div>
-      </div>
-    </script>
 
   </body>
 </html>
