@@ -1,13 +1,19 @@
 $(function() {
 
-	console.log($) // JQUERY IS WORKING!
-	console.log(_) // UNDERSCORE IS WORKING!
-	console.log("Ready to code!");
-
 	var $listContainer = $("#list-container");
 
 	var template = _.template($("#list-template").html());
 
+	// Modal Variables
+	var $addListModal = $("#add-list-modal");
+	var $newListForm = $("#new-list-form");
+	var $listTitle = $("#list-title");
+	var $listGenre = $("#list-genre-select");
+	var $itemOneInput = $("#item-one-input");
+	var $itemTwoInput = $("#item-two-input");
+	var $itemThreeInput = $("#item-three-input");
+	var $itemFourInput = $("#item-four-input");
+	var $itemFiveInput = $("#item-five-input");
 
 	// var lists = [
 	// 	{
@@ -36,6 +42,7 @@ $(function() {
 	// 	}
 	// ];
 
+	// On page Load
 	$.ajax({
 		url: "http://localhost:3000/api/lists",
 		type: "GET",
@@ -48,4 +55,48 @@ $(function() {
 		}
 	});
 
+	// On New List Modal Show
+	$addListModal.on('shown.bs.modal', function () {
+		$listTitle.focus();
+	})
+
+	$newListForm.on("submit", function(event) {
+		event.preventDefault();
+
+		$addListModal.modal("hide");
+
+		console.log("form submitted");
+
+		// Temporary variables
+		var listTitleVal = $listTitle.val();
+		var listGenreVal = $listGenre.val();
+		var itemOneVal = $itemOneInput.val();
+		var itemTwoVal = $itemTwoInput.val();
+		var itemThreeVal = $itemThreeInput.val();
+		var itemFourVal = $itemFourInput.val();
+		var itemFiveVal = $itemFourInput.val();
+
+		var listData = {
+			title: listTitleVal,
+			date: date,
+			genre: listGenreVal,
+			itemOne: itemOneVal,
+			itemTwo: itemTwoVal,
+			itemThree: itemThreeVal,
+			itemFour: itemFourVal,
+			itemFive: itemFiveVal,
+			thumbsUp: 0,
+			forks: 0,
+			author: "author name"
+		};
+
+	});
+
 });
+
+
+
+
+
+
+

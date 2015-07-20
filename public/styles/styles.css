@@ -1,8 +1,7 @@
-/*
-*  STYLES.CSS
-*  PUT YOUR CUSTOM CLASSES AND STYLES HERE
-*/
 
+
+
+/* - - - - - MAIN PAGE - - - -  */
 body {
 	background-color: #E9EAEC;
 	font-family: 'Open Sans', sans-serif;
@@ -16,11 +15,13 @@ body {
 	margin-bottom: 15px;
 }
 
-#new-list {
+#new-list-button {
 	position: fixed;
 	bottom: 15px;
 	right: 15px;
 }
+
+/* - - - - - LIST PANEL - - - -  */
 
 .row .panel {
 	border: 0px;
@@ -115,6 +116,13 @@ body {
 	margin-top: -5px;
 }
 
+/* - - - - - NEW LIST MODAL - - - -  */
+
+#genre-dropdown {
+	display: block;
+	width: 100%;
+	text-align: left;
+}
 
 
 

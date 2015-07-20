@@ -30,7 +30,11 @@
       </div>
     </nav>
 
-    <!-- Post Forms Modal -->
+    <button type="button" data-toggle="modal" data-target="#add-list-modal" class="btn btn-primary" id="new-list-button">
+      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> &nbspNew Top 5
+    </button>
+
+    <!-- List Forms Modal -->
     <div class="container">
       <div id="add-list-modal" class="col-lg-8 col-md-offset-2 modal fade">
         <div class="modal-dialog">
@@ -38,21 +42,71 @@
 
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title">Add New List</h4>
+              <h4 class="modal-title">What's your Top 5?</h4>
             </div>
 
             <form id="new-list-form">
               <div class="modal-body">
 
-                  <div class="form-group" id="list-title-group">
-                    <input class="form-control" id="list-title" placeholder="Ex: Greatest Rock Albums...">
-                    <span id="title-error" class="help-block collapse">&nbsp;This list needs a title!</span>
-                  </div>
+                <div class="form-group" id="list-title-group">
+                  <label for="list-title">Top 5...</label>
+                  <input class="form-control" id="list-title" type="text" placeholder="Ex: Greatest Rock Albums, Pump up songs...">
+                  <span id="title-error" class="help-block collapse">&nbsp;This list needs a title!</span>
+                </div>
 
-                  <div class="form-group" id="post-body-group">
-                    <input class="form-control" id="list-genre" placeholder="Ex: Greatest Rock Albums...">
-                    <span id="body-error" class="help-block collapse">&nbsp;This list needs a genre!</span>
+                <div class="form-group">
+                  <select class="form-control" id="list-genre-select">
+                    <option value="none" selected="selected" style="display:none;" disabled>Pick a Genre</option>
+                    <option value="blues">Blues</option>
+                    <option value="classical">Classical</option>
+                    <option value="country">Country</option>
+                    <option value="dance">Dance</option>
+                    <option value="electronic">Electronic</option>
+                    <option value="hip hop / rap">Hip Hop / Rap</option>
+                    <option value="independent">Independent</option>
+                    <option value="jazz">Jazz</option>
+                    <option value="new age">New Age</option>
+                    <option value="pop">Pop</option>
+                    <option value="r & b / soul">R & B / Soul</option>
+                    <option value="reggae">Reggae</option>
+                    <option value="rock">Rock</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon" id="item-1-addon">1.</span>
+                    <input id="item-one-input" type="text" class="form-control" placeholder="First Item..." aria-describedby="item-1-addon">
                   </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon" id="item-2-addon">2.</span>
+                    <input id="item-two-input" type="text" class="form-control" placeholder="Second Item..." aria-describedby="item-2-addon">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon" id="item-3-addon">3.</span>
+                    <input id="item-three-input" type="text" class="form-control" placeholder="Third Item..." aria-describedby="item-3-addon">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon" id="item-4-addon">4.</span>
+                    <input id="item-three-input" type="text" class="form-control" placeholder="Fourth Item..." aria-describedby="item-4-addon">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon" id="item-5-addon">5.</span>
+                    <input id="item-three-input" type="text" class="form-control" placeholder="Last Item..." aria-describedby="item-5-addon">
+                  </div>
+                </div>
 
               </div>
 
@@ -62,6 +116,7 @@
                   <button type="submit" id="publish-list" class="btn btn-primary">Publish List</button>
                 </div>
               </div>
+
             </form>
 
           </div>
@@ -81,10 +136,6 @@
       </div> -->
 
     </div> <!-- End of Container -->
-
-    <button type="button" class="btn btn-primary" id="new-list">
-      <span data-toggle="modal" data-target="#add-list-modal" class="glyphicon glyphicon-plus" aria-hidden="true"></span> &nbspNew Top 5
-    </button>
 
     <!-- SCRIPTS -->
 
