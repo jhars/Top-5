@@ -15,6 +15,14 @@ $(function() {
 	var $itemFourInput = $("#item-four-input");
 	var $itemFiveInput = $("#item-five-input");
 
+	$listTitle.prop('required',true);
+	$listGenre.prop('required',true);
+	$itemOneInput.prop('required',true);
+	$itemTwoInput.prop('required',true);
+	$itemThreeInput.prop('required',true);
+	$itemFourInput.prop('required',true);
+	$itemFiveInput.prop('required',true);
+
 	// var lists = [
 	// 	{
 	// 		title: "Greatest Albums of All Time",
@@ -63,37 +71,67 @@ $(function() {
 	$newListForm.on("submit", function(event) {
 		event.preventDefault();
 
-		$addListModal.modal("hide");
+		if (!$listGenre.val()) {
+			console.log("you need a genre!");
 
-		console.log("form submitted");
+			$("#list-genre-group").addClass("has-error");
+			$('#genre-error.collapse').collapse("show")
 
-		// Temporary variables
-		var listTitleVal = $listTitle.val();
-		var listGenreVal = $listGenre.val();
-		var itemOneVal = $itemOneInput.val();
-		var itemTwoVal = $itemTwoInput.val();
-		var itemThreeVal = $itemThreeInput.val();
-		var itemFourVal = $itemFourInput.val();
-		var itemFiveVal = $itemFiveInput.val();
+		} else {
 
-		var date = new Date().toLocaleString();
+			$addListModal.modal("hide");
 
-		var listData = {
-			title: listTitleVal,
-			date: date,
-			genre: listGenreVal,
-			itemOne: itemOneVal,
-			itemTwo: itemTwoVal,
-			itemThree: itemThreeVal,
-			itemFour: itemFourVal,
-			itemFive: itemFiveVal,
-			thumbsUp: 0,
-			forks: 0,
-			author: "author name"
-		};
+			console.log("form submitted");
 
-		var $list = $(listTemplate(listData));
-		$listsContainer.prepend($list);
+			// Temporary variables
+			var listTitleVal = $listTitle.val();
+			var listGenreVal = $listGenre.val();
+			var itemOneVal = $itemOneInput.val();
+			var itemTwoVal = $itemTwoInput.val();
+			var itemThreeVal = $itemThreeInput.val();
+			var itemFourVal = $itemFourInput.val();
+			var itemFiveVal = $itemFiveInput.val();
+
+			var date = new Date().toLocaleString();
+
+			var listData = {
+				title: listTitleVal,
+				date: date,
+				genre: listGenreVal,
+				itemOne: itemOneVal,
+				itemTwo: itemTwoVal,
+				itemThree: itemThreeVal,
+				itemFour: itemFourVal,
+				itemFive: itemFiveVal,
+				thumbsUp: 0,
+				forks: 0,
+				author: "author name"
+			};
+
+			console.log("--> this is the data being sent over to server");
+			console.log(listData);
+
+			$.ajax({
+				type: "POST",
+				url: "/api/lists",
+				data: listData,
+				success: function(returnedData) {
+
+					console.log("--> this is the returnedData:")
+					console.log(returnedData);
+
+					//render on client side
+					var $list = $(listTemplate(returnedData));
+					$listsContainer.prepend($list);
+
+				},
+				error: function() {
+					alert("Error, could not post!");
+				}
+
+			});
+
+		}
 
 	});
 

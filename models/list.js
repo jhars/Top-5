@@ -12,7 +12,7 @@ var ListSchema = new Schema({
   itemThree: String,
   itemFour: String,
   itemFive: String,
-  thumbsup: Number,
+  thumbsUp: Number,
   forks: Number,
   author: String
 });

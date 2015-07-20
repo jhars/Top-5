@@ -31,40 +31,63 @@ app.get("/", function(req, res) {
   res.sendFile(__dirname + "/public/views/index.html");
 });
 
-var lists = [
-	{
-		title: "Greatest Albums of All Time",
-		date: "00/00/0000",
-		genre: "All",
-		itemOne: "Sgt. Pepper's Lonely Hearts Club Band - The Beatles",
-		itemTwo: "Pet Sounds - The Beach Boys",
-		itemThree: "What’s Going On - Marvin Gaye",
-		itemFour: "Enter The Wutang (36 Chamers) - Wu-Tang Clan",
-		itemFive: "Thriller - Michael Jackson",
-		thumbsUp: 12,
-		forks: 6,
-		author: "henryfreel"
-	},
-	{
-		title: "Here is another title",
-		date: "00/00/0000",
-		genre: "All",
-		itemOne: "Item One",
-		itemTwo: "Item Two",
-		itemThree: "Item Three",
-		itemFour: "Item Four",
-		itemFive: "Item Five",
-		thumbsUp: 32,
-		forks: 11,
-		author: "user's name"
-	}
-];
+// var lists = [
+// 	{
+// 		title: "Greatest Albums of All Time",
+// 		date: "00/00/0000",
+// 		genre: "All",
+// 		itemOne: "Sgt. Pepper's Lonely Hearts Club Band - The Beatles",
+// 		itemTwo: "Pet Sounds - The Beach Boys",
+// 		itemThree: "What’s Going On - Marvin Gaye",
+// 		itemFour: "Enter The Wutang (36 Chamers) - Wu-Tang Clan",
+// 		itemFive: "Thriller - Michael Jackson",
+// 		thumbsUp: 12,
+// 		forks: 6,
+// 		author: "henryfreel"
+// 	},
+// 	{
+// 		title: "Here is another title",
+// 		date: "00/00/0000",
+// 		genre: "All",
+// 		itemOne: "Item One",
+// 		itemTwo: "Item Two",
+// 		itemThree: "Item Three",
+// 		itemFour: "Item Four",
+// 		itemFive: "Item Five",
+// 		thumbsUp: 32,
+// 		forks: 11,
+// 		author: "user's name"
+// 	}
+// ];
 
 app.get('/api/lists', function (req, res) {
 
 	List.find(function (err, foundLists){
 	    res.json(foundLists);
 	  });
+
+});
+
+// MONGODB New Post
+app.post('/api/lists', function (req, res) {
+
+  var newList = new List({
+	title: req.body.title,
+	date: req.body.date,
+	genre: req.body.genre,
+	itemOne: req.body.itemOne,
+	itemTwo: req.body.itemTwo,
+	itemThree: req.body.itemThree,
+	itemFour: req.body.itemFour,
+	itemFive: req.body.itemFive,
+	thumbsUp: req.body.thumbsUp,
+	forks: req.body.forks,
+	author: req.body.author
+  });
+
+  newList.save(function (err, savedList) {
+    res.json(savedList);
+  });
 
 });
 
