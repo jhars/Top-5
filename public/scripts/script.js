@@ -44,7 +44,7 @@ $(function() {
 
 	// On page Load
 	$.ajax({
-		url: "http://localhost:3000/api/lists",
+		url: "/api/lists",
 		type: "GET",
 		success: function(data) {
 
