@@ -5,17 +5,19 @@ var express = require("express"),
     mongoose = require("mongoose");
 
 // Connect to the database you set up
-// mongoose.connect("mongodb://localhost/test");
+mongoose.connect("mongodb://localhost/top-5");
 
-mongoose.connect(
-  process.env.MONGOLAB_URI ||
-  process.env.MONGOHQ_URL ||
-  'mongodb://localhost/test'
-);
+var List = require('./models/list');
 
-var User = require('./models/list');
+// mongoose.connect(
+//   process.env.MONGOLAB_URI ||
+//   process.env.MONGOHQ_URL ||
+//   "mongodb://localhost/top-5"
+// );
 
-app.all('/*', function(req, res, next) {
+var User = require("./models/list");
+
+app.all("/*", function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   next();
 });
@@ -24,11 +26,11 @@ app.all('/*', function(req, res, next) {
 app.use(bodyParser.urlencoded({extended: true}));
 
 // serve js and css files from public folder
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + "/public"));
 
 // set up root route to respond with index.html
-app.get('/', function(req, res) {
-  res.sendFile(__dirname + '/public/views/index.html');
+app.get("/", function(req, res) {
+  res.sendFile(__dirname + "/public/views/index.html");
 });
 
 var lists = [
@@ -61,8 +63,11 @@ var lists = [
 ];
 
 app.get('/api/lists', function (req, res) {
-	console.log("suck it")
-    res.json(lists);
+
+	List.find(function (err, foundLists){
+	    res.json(foundLists);
+	  });
+
 });
 
 // listen on port 3000

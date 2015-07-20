@@ -1,8 +1,8 @@
 $(function() {
 
-	var $listContainer = $("#list-container");
+	var $listsContainer = $("#list-container");
 
-	var template = _.template($("#list-template").html());
+	var listTemplate = _.template($("#list-template").html());
 
 	// Modal Variables
 	var $addListModal = $("#add-list-modal");
@@ -49,7 +49,7 @@ $(function() {
 		success: function(data) {
 
 			_.each(data, function(foundList) {
-				$listContainer.append(template(foundList));
+				$listsContainer.prepend(listTemplate(foundList));
 			});
 
 		}
@@ -74,7 +74,9 @@ $(function() {
 		var itemTwoVal = $itemTwoInput.val();
 		var itemThreeVal = $itemThreeInput.val();
 		var itemFourVal = $itemFourInput.val();
-		var itemFiveVal = $itemFourInput.val();
+		var itemFiveVal = $itemFiveInput.val();
+
+		var date = new Date().toLocaleString();
 
 		var listData = {
 			title: listTitleVal,
@@ -89,6 +91,9 @@ $(function() {
 			forks: 0,
 			author: "author name"
 		};
+
+		var $list = $(listTemplate(listData));
+		$listsContainer.prepend($list);
 
 	});
 
