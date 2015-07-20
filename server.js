@@ -6,7 +6,14 @@ var express = require("express"),
 
 // Connect to the database you set up
 // mongoose.connect("mongodb://localhost/test");
-// var User = require('./models/list');
+
+mongoose.connect(
+  process.env.MONGOLAB_URI ||
+  process.env.MONGOHQ_URL ||
+  'mongodb://localhost/test'
+);
+
+var User = require('./models/list');
 
 app.all('/*', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -59,7 +66,7 @@ app.get('/api/lists', function (req, res) {
 });
 
 // listen on port 3000
-app.listen(3000, function () {
+app.listen(process.env.PORT || 3000, function () {
   console.log('server started on localhost:3000');
 });
 
