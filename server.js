@@ -5,8 +5,8 @@ var express = require("express"),
     mongoose = require("mongoose");
 
 // Connect to the database you set up
-mongoose.connect("mongodb://localhost/mongo-seed");
-var User = require('./models/user');
+// mongoose.connect("mongodb://localhost/test");
+// var User = require('./models/list');
 
 // tell app to use bodyParser middleware
 app.use(bodyParser.urlencoded({extended: true}));
@@ -19,14 +19,41 @@ app.get('/', function(req, res) {
   res.sendFile(__dirname + '/public/views/index.html');
 });
 
-app.get('/api/users', function (req, res) {
-  User.find(function (err, users) {
-    res.json(users);
-  });
+var lists = [
+	{
+		title: "Greatest Albums of All Time",
+		category: "Music",
+		itemOne: "Sgt. Pepper's Lonely Hearts Club Band - The Beatles",
+		itemTwo: "Pet Sounds - The Beach Boys",
+		itemThree: "What’s Going On - Marvin Gaye",
+		itemFour: "Enter The Wutang (36 Chamers) - Wu-Tang Clan",
+		itemFive: "Thriller - Michael Jackson",
+		thumbsUp: 12,
+		forks: 6,
+		Author: "henryfreel"
+	},
+	{
+		title: "Here is another title",
+		category: "some other category",
+		itemOne: "Item One",
+		itemTwo: "Item Two",
+		itemThree: "Item Three",
+		itemFour: "Item Four",
+		itemFive: "Item Five",
+		thumbsUp: 12,
+		forks: 6,
+		Author: "user's name"
+	}
+];
+
+app.get('/api/lists', function (req, res) {
+	console.log("suck it")
+    res.json(lists);
 });
 
 // listen on port 3000
 app.listen(3000, function () {
   console.log('server started on localhost:3000');
 });
+
 
