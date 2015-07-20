@@ -3,11 +3,11 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
-var UserSchema = new Schema({
+var ListSchema = new Schema({
   name: String,	
   username: String
 });
 
-var User = mongoose.model('User', UserSchema);
+var List = mongoose.model('List', UserSchema);
 
-module.exports = User;
+module.exports = List;

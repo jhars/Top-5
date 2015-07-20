@@ -3,7 +3,123 @@
 *  PUT YOUR CUSTOM CLASSES AND STYLES HERE
 */
 
+body {
+	background-color: #E9EAEC;
+	font-family: 'Open Sans', sans-serif;
+}
+
 .navbar {
   border-radius: 0px;
 }
+
+#search-bar {
+	margin-bottom: 15px;
+}
+
+#new-list {
+	position:absolute;
+	bottom: 15px;
+	right: 15px;
+}
+
+.panel {
+	border: 0px;
+	background: #FFFFFF;
+	box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.10);
+	border-radius: 4px;
+}
+
+.panel .panel-heading {
+	padding-top: 20px;
+	padding-bottom: 20px;
+	padding-left: 20px;
+	/*background-color: #F9FAFB;*/
+	background-color: #fff;
+	font-weight: 700;
+	border: 0px;
+	border-bottom: 1px solid #eee;
+}
+
+.panel-heading .panel-title {
+	font-weight: 600;
+	color: #333;
+	font-size: 21px;
+}
+
+.list-date {
+	font-weight: 400;
+	color: #BDBDBD;
+	float: right;
+	margin-top: -24px;
+	font-size: 14px;
+}
+
+.list-group > .list-group-item {
+	padding-top: 20px;
+	padding-bottom: 20px;
+	border: 0px;
+	border-top: 1px solid #eee;
+}
+
+.number {
+	float: left;
+	height: 35px;
+	width: 35px;
+	text-align: center;
+	border-radius: 100%;
+	color: #777;
+	font-weight: 300;
+	font-size: 24px;
+
+	/*background-color: #888;*/
+	margin-right: 10px;
+	margin-top: -10px;
+	padding-top: 2px;
+}
+
+.panel .panel-footer {
+	/*z-index: 2;*/
+	border-top: 1px solid #eee;
+	-webkit-box-shadow: 0 1px 0 #fff inset;
+	box-shadow: 0 1px 0 #fff inset;
+	background-color: #F9FAFB;
+	padding-top: 20px;
+	/*height: 80px;*/
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.panel-footer .thumbs-up-counter {
+	/*background-color: red;*/
+	display: inline-block;
+}
+
+.glyphicon-thumbs-up {
+	font-size: 20px;
+}
+
+.glyphicon-random {
+	font-size: 20px;
+}
+
+.panel-footer .fork-counter {
+	/*background-color: red;*/
+	display: inline-block;
+	margin-left: 10px;
+}
+
+.panel-footer .username {
+	font-size: 18px;
+	float: right;
+	margin-top: -5px;
+}
+
+
+
+
+
+
+
+
+
 
