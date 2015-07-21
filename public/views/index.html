@@ -126,6 +126,99 @@
       </div>
     </div> <!-- End of Modal -->
 
+    <!-- Edit List Forms Modal -->
+    <div class="container">
+      <div id="edit-list-modal" class="col-lg-8 col-md-offset-2 modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">What's your Top 5?</h4>
+            </div>
+
+            <form id="edit-list-form">
+              <div class="modal-body">
+
+                <div class="form-group" id="edit-list-title-group">
+                  <label for="edit-list-title">Top 5...</label>
+                  <input class="form-control" id="edit-list-title" type="text" placeholder="Ex: Greatest Rock Albums, Pump up songs...">
+                  <span id="edit-title-error" class="help-block collapse">&nbsp;This list needs a title!</span>
+                </div>
+
+                <div class="form-group" id="edit-list-genre-group">
+                  <select class="form-control" id="edit-list-genre-select">
+                    <option value="none" selected="selected" style="display:none;" disabled>Pick a Genre</option>
+                    <option value="all">All</option>
+                    <option value="blues">Blues</option>
+                    <option value="classical">Classical</option>
+                    <option value="country">Country</option>
+                    <option value="dance">Dance</option>
+                    <option value="electronic">Electronic</option>
+                    <option value="hip hop / rap">Hip Hop / Rap</option>
+                    <option value="independent">Independent</option>
+                    <option value="jazz">Jazz</option>
+                    <option value="new age">New Age</option>
+                    <option value="pop">Pop</option>
+                    <option value="r & b / soul">R & B / Soul</option>
+                    <option value="reggae">Reggae</option>
+                    <option value="rock">Rock</option>
+                  </select>
+                  <span id="edit-genre-error" class="help-block collapse">&nbsp;This list needs a genre!</span>
+                </div>
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon" id="edit-item-1-addon">1.</span>
+                    <input id="edit-item-one-input" type="text" class="form-control" placeholder="First Item..." aria-describedby="edit-item-1-addon">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon" id="edit-item-2-addon">2.</span>
+                    <input id="edit-item-two-input" type="text" class="form-control" placeholder="Second Item..." aria-describedby="edit-item-2-addon">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon" id="edit-item-3-addon">3.</span>
+                    <input id="edit-item-three-input" type="text" class="form-control" placeholder="Third Item..." aria-describedby="edit-item-3-addon">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon" id="edit-item-4-addon">4.</span>
+                    <input id="edit-item-four-input" type="text" class="form-control" placeholder="Fourth Item..." aria-describedby="edit-item-4-addon">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon" id="edit-item-5-addon">5.</span>
+                    <input id="edit-item-five-input" type="text" class="form-control" placeholder="Last Item..." aria-describedby="edit-item-5-addon">
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="modal-footer">
+                <div class="form-group">
+                  <button type="button" id="delete-list" class="btn btn-danger pull-left">Delete Post</button>
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                  <button type="submit" id="publish-list" class="btn btn-primary">Publish List</button>
+                </div>
+              </div>
+
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div> <!-- End of Modal -->
+
     <div class="container" id="list-container">
 
 <!--       <div class="row">
@@ -144,20 +237,21 @@
     <script type="text/template" id="list-template">
       <div class="row">
         <div class="col-md-offset-2 col-md-8">
-          <div class="panel panel-default" id="post-<%= _id %>" data-id="<%= _id %>">
+          <div class="panel panel-default" id="list-<%= _id %>" data-id="<%= _id %>">
 
             <div class="panel-heading">
-              <p class="panel-title"><span class="top-five">Top 5</span> <%= title %> - <%= genre %></p>
+              <p class="panel-title"><span class="top-five">Top 5 </span><span class="list-title"><%= title %></span> - <span class="list-genre"><%= genre %></span></p>
+              <a class="edit-pencil edit-list-button" data-toggle="modal" data-target="#edit-list-modal"><span class="glyphicon glyphicon-pencil edit"></span></a>
               <p class="list-date"><%= date %></p>
             </div>
 
             <!-- List group -->
              <ul class="list-group">
-               <li class="list-group-item"><div class="number">1</div><%= itemOne %></li>
-               <li class="list-group-item"><div class="number">2</div><%= itemTwo %></li>
-               <li class="list-group-item"><div class="number">3</div><%= itemThree %></li>
-               <li class="list-group-item"><div class="number">4</div><%= itemFour %></li>
-               <li class="list-group-item"><div class="number">5</div><%= itemFive %></li>
+               <li class="list-group-item list-item-one"><div class="number">1</div><%= itemOne %></li>
+               <li class="list-group-item list-item-two"><div class="number">2</div><%= itemTwo %></li>
+               <li class="list-group-item list-item-three"><div class="number">3</div><%= itemThree %></li>
+               <li class="list-group-item list-item-four"><div class="number">4</div><%= itemFour %></li>
+               <li class="list-group-item list-item-five"><div class="number">5</div><%= itemFive %></li>
              </ul>
 
              <div class="panel-footer">

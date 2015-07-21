@@ -42,8 +42,6 @@ describe('POST /api/lists', function() {
       },
       function(error, response, body) {
         expect(response.statusCode).to.equal(200);
-        console.log("--> this is the id");
-        console.log(JSON.parse(body)._id);
         listId = JSON.parse(body)._id
         done();
       }
@@ -56,17 +54,7 @@ describe('PUT /api/lists/:id', function() {
       {
         url: baseUrl + '/api/lists/' + listId,
         form: {
-          	title: "put test",
-			date: "put test",
-			genre: "put test",
-			itemOne: "put test",
-			itemTwo: "put test",
-			itemThree: "put test",
-			itemFour: "put test",
-			itemFive: "put test",
-			thumbsUp: 0,
-			forks: 0,
-			author: "put test"
+          	title: "put test"
         }
       },
       function(error, response, body) {

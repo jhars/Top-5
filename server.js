@@ -60,7 +60,8 @@ app.get("/", function(req, res) {
 // 	}
 // ];
 
-app.get('/api/lists', function (req, res) {
+// Get all List
+app.get("/api/lists", function (req, res) {
 
 	List.find(function (err, foundLists){
 	    res.json(foundLists);
@@ -68,8 +69,16 @@ app.get('/api/lists', function (req, res) {
 
 });
 
-// MONGODB New Post
-app.post('/api/lists', function (req, res) {
+// Get One List by ID
+app.get("/api/lists/:id", function (req, res) {
+	var targetId = req.params.id;
+	List.findOne({_id: targetId}, function (err, foundList) {
+		res.json(foundList);
+	});
+});
+
+// New Post
+app.post("/api/lists", function (req, res) {
 
   var newList = new List(req.body);
 
@@ -79,16 +88,31 @@ app.post('/api/lists', function (req, res) {
 
 });
 
-// MONGODB Edit Post
-app.put('/api/lists/:id', function (req, res) {
+// Edit List
+app.put("/api/lists/:id", function (req, res) {
 
   var targetId = req.params.id;
-  List.findOneAndUpdate({_id: targetId}, req.body, function (err, foundList) {
-	  res.json(foundList);
+
+
+  List.findOne({_id: targetId}, function (err, foundList) {
+
+  		foundList.title = req.body.title;
+  		foundList.genre = req.body.genre;
+  		foundList.date = req.body.date;
+  		foundList.itemOne = req.body.itemOne;
+  		foundList.itemTwo = req.body.itemTwo;
+  		foundList.itemThree = req.body.itemThree;
+  		foundList.itemFour = req.body.itemFour;
+  		foundList.itemFive = req.body.itemFive;
+
+  		foundList.save(function (err, foundList) {
+  		  res.json(foundList);
+  		});
+
   });
 });
 
-// MONGODB - Delete
+// Delete List
 app.delete("/api/lists/:id", function (req, res) {
 
   var targetId = req.params.id;
@@ -102,7 +126,7 @@ app.delete("/api/lists/:id", function (req, res) {
 
 // listen on port 3000
 app.listen(process.env.PORT || 3000, function () {
-  console.log('server started on localhost:3000');
+  console.log("server started on localhost:3000");
 });
 
 

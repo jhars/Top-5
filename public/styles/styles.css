@@ -46,13 +46,19 @@ body {
 	font-weight: 600;
 	color: #333;
 	font-size: 21px;
+	display: inline-block;
+}
+
+.edit-list-button {
+	cursor: pointer;
+	margin-left: 6px;
 }
 
 .list-date {
 	font-weight: 400;
 	color: #BDBDBD;
 	float: right;
-	margin-top: -24px;
+	margin-top: 6px;
 	font-size: 14px;
 }
 
