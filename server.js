@@ -91,6 +91,18 @@ app.post('/api/lists', function (req, res) {
 
 });
 
+// MONGODB - Delete
+app.delete("/api/lists/:id", function (req, res) {
+
+  var targetId = req.params.id;
+
+  // find phrase in db by id and remove
+  List.findOneAndRemove({_id: targetId}, function (err, deletedList) {
+    res.json(deletedList);
+  });
+
+});
+
 // listen on port 3000
 app.listen(process.env.PORT || 3000, function () {
   console.log('server started on localhost:3000');
