@@ -71,24 +71,21 @@ app.get('/api/lists', function (req, res) {
 // MONGODB New Post
 app.post('/api/lists', function (req, res) {
 
-  var newList = new List({
-	title: req.body.title,
-	date: req.body.date,
-	genre: req.body.genre,
-	itemOne: req.body.itemOne,
-	itemTwo: req.body.itemTwo,
-	itemThree: req.body.itemThree,
-	itemFour: req.body.itemFour,
-	itemFive: req.body.itemFive,
-	thumbsUp: req.body.thumbsUp,
-	forks: req.body.forks,
-	author: req.body.author
-  });
+  var newList = new List(req.body);
 
   newList.save(function (err, savedList) {
     res.json(savedList);
   });
 
+});
+
+// MONGODB Edit Post
+app.put('/api/lists/:id', function (req, res) {
+
+  var targetId = req.params.id;
+  List.findOneAndUpdate({_id: targetId}, req.body, function (err, foundList) {
+	  res.json(foundList);
+  });
 });
 
 // MONGODB - Delete

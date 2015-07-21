@@ -48,7 +48,34 @@ describe('POST /api/lists', function() {
         done();
       }
     );
+});
+
+describe('PUT /api/lists/:id', function() {
+  it('should return statusCode 200', function(done) {
+    request.put(
+      {
+        url: baseUrl + '/api/lists/' + listId,
+        form: {
+          	title: "put test",
+			date: "put test",
+			genre: "put test",
+			itemOne: "put test",
+			itemTwo: "put test",
+			itemThree: "put test",
+			itemFour: "put test",
+			itemFive: "put test",
+			thumbsUp: 0,
+			forks: 0,
+			author: "put test"
+        }
+      },
+      function(error, response, body) {
+        expect(response.statusCode).to.equal(200);
+        done();
+      }
+    );
   });
+});
 
 describe('DELETE /api/lists/:id', function() {
   it('should return statusCode 200', function(done) {
