@@ -236,7 +236,21 @@ $(function() {
 
 	$deleteList.on("click", function (event) {
 
-		
+		// hide the modal
+		$editListModal.modal("hide");
+
+		$.ajax({
+			url: "/api/lists/" + editId,
+			type: "DELETE",
+			success: function(data) {
+				
+				// remove deleted phrase from view
+		        $('#list-' + editId).remove();
+			},
+				error: function() {
+					alert("Error!");
+			}
+		});
 
 	});
 
