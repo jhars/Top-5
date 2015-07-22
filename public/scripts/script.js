@@ -4,68 +4,25 @@ $(function() {
 
 	var listTemplate = _.template($("#list-template").html());
 
-	// Modal Variables
-	var $addListModal = $("#add-list-modal");
-	var $newListForm = $("#new-list-form");
-	var $listTitle = $("#list-title");
-	var $listGenre = $("#list-genre-select");
-	var $itemOneInput = $("#item-one-input");
-	var $itemTwoInput = $("#item-two-input");
-	var $itemThreeInput = $("#item-three-input");
-	var $itemFourInput = $("#item-four-input");
-	var $itemFiveInput = $("#item-five-input");
+	$("#sign-up-email").prop('required', true);
+	$("#sign-up-username").prop('required', true);
+	$("#sign-up-password").prop('required', true);
 
-	$listTitle.prop('required',true);
-	$listGenre.prop('required',true);
-	$itemOneInput.prop('required',true);
-	$itemTwoInput.prop('required',true);
-	$itemThreeInput.prop('required',true);
-	$itemFourInput.prop('required',true);
-	$itemFiveInput.prop('required',true);
+	$("#log-in-email").prop('required', true);
+	$("#log-in-password").prop('required', true);
 
-	// Edit List Variables
-	var $editListButton = $(".edit-list-buttom")
-	var $editListModal = $("#edit-list-modal");
-	var $editListForm = $("#edit-list-form");
-	var $editListTitle = $("#edit-list-title");
-	var $editListGenre = $("#edit-list-genre-select");
-	var $editItemOneInput = $("#edit-item-one-input");
-	var $editItemTwoInput = $("#edit-item-two-input");
-	var $editItemThreeInput = $("#edit-item-three-input");
-	var $editItemFourInput = $("#edit-item-four-input");
-	var $editItemFiveInput = $("#edit-item-five-input");
-	var $deleteList = $("#delete-list");
+	$("#list-title").prop('required',true);
+	$("#list-genre-select").prop('required',true);
+	$("#item-one-input").prop('required',true);
+	$("#item-two-input").prop('required',true);
+	$("#item-three-input").prop('required',true);
+	$("#item-four-input").prop('required',true);
+	$("#item-five-input").prop('required',true);
 
 	var editId;
 
-	// var lists = [
-	// 	{
-	// 		title: "Greatest Albums of All Time",
-	// 		category: "Music",
-	// 		itemOne: "Sgt. Pepper's Lonely Hearts Club Band - The Beatles",
-	// 		itemTwo: "Pet Sounds - The Beach Boys",
-	// 		itemThree: "What’s Going On - Marvin Gaye",
-	// 		itemFour: "Enter The Wutang (36 Chamers) - Wu-Tang Clan",
-	// 		itemFive: "Thriller - Michael Jackson",
-	// 		thumbsUp: 12,
-	// 		forks: 6,
-	// 		Author: "henryfreel"
-	// 	},
-	// 	{
-	// 		title: "Here is another title",
-	// 		category: "some other category",
-	// 		itemOne: "Item One",
-	// 		itemTwo: "Item Two",
-	// 		itemThree: "Item Three",
-	// 		itemFour: "Item Four",
-	// 		itemFive: "Item Five",
-	// 		thumbsUp: 12,
-	// 		forks: 6,
-	// 		Author: "user's name"
-	// 	}
-	// ];
+	// - - - - - - - - - - PAGE LOAD - - - - - - - - - - //
 
-	// On page Load
 	$.ajax({
 		url: "/api/lists",
 		type: "GET",
@@ -78,31 +35,108 @@ $(function() {
 		}
 	});
 
-	// On New List Modal Show
-	$addListModal.on('shown.bs.modal', function () {
-		$listTitle.focus();
-	})
+	// - - - - - - - - - - SIGN UP - - - - - - - - - - //
 
-	$newListForm.on("submit", function(event) {
+	// Sign Up Modal Show
+	$("#sign-up-modal").on("shown.bs.modal", function () {
+		$("#sign-up-email").focus();
+	});
+
+	// Sign Up Modal Hide
+	$("#sign-up-modal").on('hidden.bs.modal', function(){
+	    $(this).find('form')[0].reset();
+	});
+
+	// Sign Up Submit
+	$("#sign-up-form").on("submit", function (event) {
 		event.preventDefault();
 
-		if (!$listGenre.val()) {
+		var newUserObj = {
+			email: $("#sign-up-email").val(),
+			username: $("#sign-up-username").val(),
+			password: $("#sign-up-password").val()
+		}
+
+		console.log(newUserObj);
+
+		$("#sign-up-modal").modal("hide");
+
+		$.ajax({
+			url: "/api/users",
+			type: "POST",
+			data: newUserObj,
+			success: function (data) {
+				console.log("new user sent")
+			},
+			error: function () {
+				console.log("Error, could not post new User!");
+			}
+		});
+
+	});
+
+	// - - - - - - - - - - LOG IN - - - - - - - - - - //
+
+	// Sign Up Modal Show
+	$("#log-in-modal").on("shown.bs.modal", function () {
+		$("#log-in-email").focus();
+	});
+
+	// Sign Up Modal Hide
+	$("#log-in-modal").on('hidden.bs.modal', function(){
+	    $(this).find('form')[0].reset();
+	});
+
+	$("#log-in-form").on('submit', function (event) {
+		event.preventDefault();
+
+		var loginUserObj = {
+			email: $("#log-in-email").val(),
+			password: $("#log-in-password").val()
+		}
+
+		$("#log-in-modal").modal("hide");
+
+		$.ajax({
+			url: '/login',
+			type: "POST",
+			data: loginUserObj,
+			sucess: function (data) {
+
+			},
+			error: function () {
+				alert("Error, could not test username")
+			}
+		});
+	});
+
+	// - - - - - - - - - - NEW LIST - - - - - - - - - - //
+
+	// On New List Modal Show
+	$("#add-list-modal").on("shown.bs.modal", function () {
+		$("#list-title").focus();
+	})
+
+	$("#new-list-form").on("submit", function(event) {
+		event.preventDefault();
+
+		if (!$("#list-genre-select").val()) {
 
 			$("#list-genre-group").addClass("has-error");
 			$('#genre-error.collapse').collapse("show")
 
 		} else {
 
-			$addListModal.modal("hide");
+			$("#add-list-modal").modal("hide");
 
 			// Temporary variables
-			var listTitleVal = $listTitle.val();
-			var listGenreVal = $listGenre.val();
-			var itemOneVal = $itemOneInput.val();
-			var itemTwoVal = $itemTwoInput.val();
-			var itemThreeVal = $itemThreeInput.val();
-			var itemFourVal = $itemFourInput.val();
-			var itemFiveVal = $itemFiveInput.val();
+			var listTitleVal = $("#list-title").val();
+			var listGenreVal = $("#list-genre-select").val();
+			var itemOneVal = $("#item-one-input").val();
+			var itemTwoVal = $("#item-two-input").val();
+			var itemThreeVal = $("#item-three-input").val();
+			var itemFourVal = $("#item-four-input").val();
+			var itemFiveVal = $("#item-five-input").val();
 
 			var date = new Date().toLocaleString();
 
@@ -154,13 +188,13 @@ $(function() {
 
 				var newGenre = data.genre.toLowerCase();
 
-				$editListTitle.val(data.title);
-				$editListGenre.val(newGenre);
-				$editItemOneInput.val(data.itemOne);
-				$editItemTwoInput.val(data.itemTwo);
-				$editItemThreeInput.val(data.itemThree);
-				$editItemFourInput.val(data.itemFour);
-				$editItemFiveInput.val(data.itemFive);
+				$("#edit-list-title").val(data.title);
+				$("#edit-list-genre-select").val(newGenre);
+				$("#edit-item-one-input").val(data.itemOne);
+				$("#edit-item-two-input").val(data.itemTwo);
+				$("#edit-item-three-input").val(data.itemThree);
+				$("#edit-item-four-input").val(data.itemFour);
+				$("#edit-item-five-input").val(data.itemFive);
 
 			},
 				error: function() {
@@ -171,10 +205,10 @@ $(function() {
 	});
 
 
-	$editListForm.on("submit", function (event) {
+	$("#edit-list-form").on("submit", function (event) {
 		event.preventDefault();
 
-		$editListModal.modal("hide");
+		$("#edit-list-modal").modal("hide");
 
 		var editDate = "editted on " + new Date().toLocaleString();
 
@@ -183,11 +217,11 @@ $(function() {
 
 		// find the name
 		var $editListNewTitle = ($("> .panel-heading > .panel-title > .list-title", $editNewList));
-		$editListNewTitle.text($editListTitle.val());
+		$editListNewTitle.text($("#edit-list-title").val());
 
 		// find the genre
 		var $editListNewGenre = ($("> .panel-heading > .panel-title > .list-genre", $editNewList));
-		$editListNewGenre.text($editListGenre.val());
+		$editListNewGenre.text($("#edit-list-genre-select").val());
 
 		// find the date
 		var $editNewListDate = ($("> .panel-heading > .list-date", $editNewList));
@@ -195,29 +229,29 @@ $(function() {
 
 		// find the items
 		var $editNewListItemOne = ($("> .list-group > .list-item-one", $editNewList));
-		$editNewListItemOne.text($editItemOneInput.val());
+		$editNewListItemOne.text($("#edit-item-one-input").val());
 
 		var $editNewListItemTwo = ($("> .list-group > .list-item-two", $editNewList));
-		$editNewListItemTwo.text($editItemTwoInput.val());
+		$editNewListItemTwo.text($("#edit-item-two-input").val());
 
 		var $editNewListItemThree = ($("> .list-group > .list-item-three", $editNewList));
-		$editNewListItemThree.text($editItemThreeInput.val());
+		$editNewListItemThree.text($("#edit-item-three-input").val());
 
 		var $editNewListItemFour = ($("> .list-group > .list-item-four", $editNewList));
-		$editNewListItemFour.text($editItemFourInput.val());
+		$editNewListItemFour.text($("#edit-item-four-input").val());
 
 		var $editNewListItemFive = ($("> .list-group > .list-item-five", $editNewList));
-		$editNewListItemFive.text($editItemFiveInput.val());
+		$editNewListItemFive.text($("#edit-item-five-input").val());
 
 		var editListObj = {
-			title: $editListTitle.val(),
-			genre: $editListGenre.val(),
+			title: $("#edit-list-title").val(),
+			genre: $("#edit-list-genre-select").val(),
 			date: editDate,
-			itemOne: $editItemOneInput.val(),
-			itemTwo: $editItemTwoInput.val(),
-			itemThree: $editItemThreeInput.val(),
-			itemFour: $editItemFourInput.val(),
-			itemFive: $editItemFiveInput.val()
+			itemOne: $("#edit-item-one-input").val(),
+			itemTwo: $("#edit-item-two-input").val(),
+			itemThree: $("#edit-item-three-input").val(),
+			itemFour: $("#edit-item-four-input").val(),
+			itemFive: $("#edit-item-five-input").val()
 		}
 
 		$.ajax({
@@ -234,16 +268,16 @@ $(function() {
 
 	});
 
-	$deleteList.on("click", function (event) {
+	$("#delete-list").on("click", function (event) {
 
 		// hide the modal
-		$editListModal.modal("hide");
+		$("#edit-list-modal").modal("hide");
 
 		$.ajax({
 			url: "/api/lists/" + editId,
 			type: "DELETE",
 			success: function(data) {
-				
+
 				// remove deleted phrase from view
 		        $('#list-' + editId).remove();
 			},

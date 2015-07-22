@@ -2,10 +2,8 @@
 var express = require("express"),
     app = express(),
     bodyParser = require("body-parser"),
-    mongoose = require("mongoose");
-
-// Connect to the database you set up
-// mongoose.connect("mongodb://localhost/top-5");
+    mongoose = require("mongoose"),
+    session = require('express-session');
 
 mongoose.connect(
   process.env.MONGOLAB_URI ||
@@ -14,6 +12,39 @@ mongoose.connect(
 );
 
 var List = require('./models/list');
+var User = require('./models/user');
+
+// set session options
+app.use(session({
+  saveUninitialized: true,
+  resave: true,
+  secret: 'SuperSecretCookie',
+  cookie: { maxAge: 60000 }
+}));
+
+// middleware to manage sessions
+app.use('/', function (req, res, next) {
+  // saves userId in session for logged-in user
+  req.login = function (user) {
+    req.session.userId = user.id;
+  };
+
+  // finds user currently logged in based on `session.userId`
+  req.currentUser = function (callback) {
+    User.findOne({_id: req.session.userId}, function (err, user) {
+      req.user = user;
+      callback(null, user);
+    });
+  };
+
+  // destroy `session.userId` to log out user
+  req.logout = function () {
+    req.session.userId = null;
+    req.user = null;
+  };
+
+  next();
+});
 
 app.all("/*", function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -31,36 +62,9 @@ app.get("/", function(req, res) {
   res.sendFile(__dirname + "/public/views/index.html");
 });
 
-// var lists = [
-// 	{
-// 		title: "Greatest Albums of All Time",
-// 		date: "00/00/0000",
-// 		genre: "All",
-// 		itemOne: "Sgt. Pepper's Lonely Hearts Club Band - The Beatles",
-// 		itemTwo: "Pet Sounds - The Beach Boys",
-// 		itemThree: "What’s Going On - Marvin Gaye",
-// 		itemFour: "Enter The Wutang (36 Chamers) - Wu-Tang Clan",
-// 		itemFive: "Thriller - Michael Jackson",
-// 		thumbsUp: 12,
-// 		forks: 6,
-// 		author: "henryfreel"
-// 	},
-// 	{
-// 		title: "Here is another title",
-// 		date: "00/00/0000",
-// 		genre: "All",
-// 		itemOne: "Item One",
-// 		itemTwo: "Item Two",
-// 		itemThree: "Item Three",
-// 		itemFour: "Item Four",
-// 		itemFive: "Item Five",
-// 		thumbsUp: 32,
-// 		forks: 11,
-// 		author: "user's name"
-// 	}
-// ];
+//  - - - - - - - - LOAD PAGE - - - - - - - //
 
-// Get all List
+// Get all Lists
 app.get("/api/lists", function (req, res) {
 
 	List.find(function (err, foundLists){
@@ -68,6 +72,63 @@ app.get("/api/lists", function (req, res) {
 	  });
 
 });
+
+//  - - - - - - - - SIGN UP - - - - - - - //
+
+// user submits the signup form
+app.post('/api/users', function (req, res) {
+
+  // grab user data from params (req.body)
+  var newUser = req.body;
+
+  // create new user with secure password
+  User.createSecure(newUser.email, newUser.username, newUser.password, function (err, user) {
+    console.log(user);
+    res.send(user);
+  });
+});
+
+//  - - - - - - - - LOG IN - - - - - - - //
+
+// user submits the login form
+app.post('/login', function (req, res) {
+
+  // grab user data from params (req.body)
+  var userData = req.body;
+
+  // call authenticate function to check if password user entered is correct
+  User.authenticate(userData.email, userData.password, function (err, user) {
+    // saves user id to session
+    req.login(user);
+
+    console.log("--> this is the user");
+    console.log(user.email);
+
+    // redirect to user profile
+    res.redirect('/profile');
+  });
+});
+
+// user profile page
+app.get('/profile', function (req, res) {
+  // finds user currently logged in
+  req.currentUser(function (err, user) {
+    res.send('Welcome ' + user.email);
+  });
+});
+
+//  - - - - - - - - Show Users - - - - - - - //
+
+// user submits the login form
+app.get('/api/users', function (req, res) {
+
+	User.find(function (err, foundUsers){
+	    res.json(foundUsers);
+	  });
+
+});
+
+//  - - - - - - - - EDITTING AND DELETING - - - - - - - //
 
 // Get One List by ID
 app.get("/api/lists/:id", function (req, res) {
