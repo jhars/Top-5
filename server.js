@@ -75,7 +75,7 @@ app.get("/", function(req, res) {
 // Get all Lists
 app.get("/api/lists", function (req, res) {
 
-  List.find({}).populate('author').exec(function (err, foundLists){
+  List.find({}).  ('author').exec(function (err, foundLists){
       res.json(foundLists);
    });
 
@@ -221,7 +221,7 @@ app.delete("/api/lists/:id", function (req, res) {
 });
 
 // listen on port 3000
-app.listen("3000", function () {
+app.listen(process.env.PORT || "3000", function () {
   console.log("server started on localhost:3000");
 });
 
