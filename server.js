@@ -73,10 +73,7 @@ app.get("/", function(req, res) {
 // Get all Lists
 app.get("/api/lists", function (req, res) {
 
-  console.log("i'm getting the lists")
-
   List.find().populate('author').exec(function (err, foundLists){
-    console.log(foundLists);
       res.json(foundLists);
    });
 
@@ -144,46 +141,34 @@ app.get('/api/users', function (req, res) {
 // New Post
 app.post("/api/lists", function (req, res) {
 
-  // var listData = {
-  //   title: listTitleVal,
-  //   date: date,
-  //   genre: listGenreVal,
-  //   itemOne: itemOneVal,
-  //   itemTwo: itemTwoVal,
-  //   itemThree: itemThreeVal,
-  //   itemFour: itemFourVal,
-  //   itemFive: itemFiveVal,
-  //   thumbsUp: 0,
-  //   forks: 0,
-  //   author: currentUser
-  // };
+  User.findOne({_id: req.session.userId}).exec(function (err, foundUser) {
 
-  var newList = new List(req.body);
+      console.log("--> this is the current user");
+      console.log(foundUser.email);
 
-  User.findOne({_id: req.session.userId}).exec(function(err, user) {
+      var newList = new List(req.body);
 
-    console.log("--> this is the current user");
-    console.log(user.email);
+      newList.author = foundUser;
 
-    newList.author = user;
+      newList.save(function (err, savedList) {
 
-    newList.save(function (err, savedList) {
-      res.json(savedList);
-    });
+        console.log("--> list array before push");
+        console.log(foundUser.lists);
 
-  });
+        // add newList to `lists` array
+        foundUser.lists.push(savedList);
 
-  User.findOne({_id: req.session.userId}).exec(function(err, foundUser) {
+        foundUser.save(function (err, savedUser) {
+          // send newList as JSON response
+          res.json(savedList);
+        });
 
-    // add newList to `lists` array
-    foundUser.lists.push(newList);
+        console.log("--> list array after push");
+        console.log(foundUser.lists);
 
-    foundUser.save(function (err, savedUser) {
-      // send newList as JSON response
-      // res.json(foundUser);
-    });
+      });
 
-  });
+  }); 
 
 });
 
@@ -228,7 +213,19 @@ app.delete("/api/lists/:id", function (req, res) {
 
   // find phrase in db by id and remove
   List.findOneAndRemove({_id: targetId}, function (err, deletedList) {
-    res.json(deletedList);
+
+    var deletedId = deletedList._id
+
+    User.findOne({_id: req.session.userId}).exec(function (err, foundUser) {
+
+      foundUser.lists.splice(foundUser.lists.indexOf(deletedId), 1);
+
+      foundUser.save(function (err, savedList) {
+        res.json(deletedList);
+      });
+
+    });
+
   });
 
 });

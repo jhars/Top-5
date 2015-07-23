@@ -198,6 +198,11 @@ $(function() {
 		$("#list-title").focus();
 	})
 
+	// On New List Modal Hide
+	$("#add-list-modal").on("hidden.bs.modal", function () {
+		$(this).find('form')[0].reset();
+	})
+
 	$("#new-list-form").on("submit", function(event) {
 		event.preventDefault();
 

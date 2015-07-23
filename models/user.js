@@ -12,7 +12,10 @@ var UserSchema = new Schema({
   email: String,
   username: String,
   passwordDigest: String,
-  lists: [List]
+  lists: [{
+        type: Schema.Types.ObjectId,
+        ref: 'List'
+      }]
 });
 
 // create a new user with secure (hashed) password
@@ -44,7 +47,7 @@ UserSchema.statics.authenticate = function (email, password, callback) {
 
     // throw error if can't find user
     if (user === null) {
-      throw new Error('Can\'t find user with email ' + email);
+      throw new Error('Can\'t find user with that email');
 
     // if found user, check if password is correct
     } else if (user.checkPassword(password)) {
