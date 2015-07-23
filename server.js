@@ -162,12 +162,24 @@ app.post("/api/lists", function (req, res) {
   User.findOne({_id: req.session.userId}).exec(function(err, user) {
 
     console.log("--> this is the current user");
-    console.log(user);
+    console.log(user.email);
 
     newList.author = user;
 
     newList.save(function (err, savedList) {
       res.json(savedList);
+    });
+
+  });
+
+  User.findOne({_id: req.session.userId}).exec(function(err, foundUser) {
+
+    // add newList to `lists` array
+    foundUser.lists.push(newList);
+
+    foundUser.save(function (err, savedUser) {
+      // send newList as JSON response
+      // res.json(foundUser);
     });
 
   });
@@ -219,11 +231,6 @@ app.delete("/api/lists/:id", function (req, res) {
   });
 
 });
-
-// listen on port 3000
-// app.listen(process.env.PORT || "3000", function () {
-//   console.log("server started on localhost:3000");
-// });
 
 app.listen(process.env.PORT || require('./config').PORT, function () {
   console.log("server started on localhost:3000");

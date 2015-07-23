@@ -12,7 +12,7 @@ var UserSchema = new Schema({
   email: String,
   username: String,
   passwordDigest: String,
-  lists: [list]
+  lists: [List]
 });
 
 // create a new user with secure (hashed) password
