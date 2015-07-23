@@ -3,7 +3,7 @@ var express = require("express"),
     app = express(),
     bodyParser = require("body-parser"),
     mongoose = require("mongoose"),
-    config = require('./config'),
+    config = require('config'),
     session = require('express-session');
 
 // mongoose.connect(
