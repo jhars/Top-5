@@ -75,9 +75,9 @@ app.get("/", function(req, res) {
 // Get all Lists
 app.get("/api/lists", function (req, res) {
 
-	List.find(function (err, foundLists){
-	    res.json(foundLists);
-	  });
+  List.find({}).populate('author').exec(function (err, foundLists){
+      res.json(foundLists);
+   });
 
 });
 
@@ -112,12 +112,12 @@ app.post('/login', function (req, res) {
 });
 
 // // user profile page
-app.get('/profile', function (req, res) {
-  // finds user currently logged in
-  req.currentUser(function (err, user) {
-    res.send('Welcome');
-  });
-});
+// app.get('/profile', function (req, res) {
+//   // finds user currently logged in
+//   req.currentUser(function (err, user) {
+//     res.send('Welcome');
+//   });
+// });
 
 // - - - - - - - - - - LOG OUT - - - - - - - - - - //
 
@@ -138,6 +138,42 @@ app.get('/api/users', function (req, res) {
 
 });
 
+//  - - - - - - - - MAKING NEW LIST - - - - - - - //
+
+// New Post
+app.post("/api/lists", function (req, res) {
+
+  // var listData = {
+  //   title: listTitleVal,
+  //   date: date,
+  //   genre: listGenreVal,
+  //   itemOne: itemOneVal,
+  //   itemTwo: itemTwoVal,
+  //   itemThree: itemThreeVal,
+  //   itemFour: itemFourVal,
+  //   itemFive: itemFiveVal,
+  //   thumbsUp: 0,
+  //   forks: 0,
+  //   author: currentUser
+  // };
+
+  var newList = new List(req.body);
+
+  User.findOne({_id: req.session.userId}).exec(function(err, user) {
+
+    console.log("--> this is the current user");
+    console.log(user);
+
+    newList.author = user;
+
+    newList.save(function (err, savedList) {
+      res.json(savedList);
+    });
+
+  });
+
+});
+
 //  - - - - - - - - EDITTING AND DELETING - - - - - - - //
 
 // Get One List by ID
@@ -146,17 +182,6 @@ app.get("/api/lists/:id", function (req, res) {
 	List.findOne({_id: targetId}, function (err, foundList) {
 		res.json(foundList);
 	});
-});
-
-// New Post
-app.post("/api/lists", function (req, res) {
-
-  var newList = new List(req.body);
-
-  newList.save(function (err, savedList) {
-    res.json(savedList);
-  });
-
 });
 
 // Edit List

@@ -1,7 +1,8 @@
 // test.js
 
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+    Schema = mongoose.Schema,
+    User = require('./user');
 
 var ListSchema = new Schema({
   title: String,	
@@ -14,7 +15,10 @@ var ListSchema = new Schema({
   itemFive: String,
   thumbsUp: Number,
   forks: Number,
-  author: String
+  author: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+      }
 });
 
 var List = mongoose.model('List', ListSchema);

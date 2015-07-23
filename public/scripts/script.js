@@ -221,6 +221,8 @@ $(function() {
 
 			var date = new Date().toLocaleString();
 
+			var currentUser;
+
 			var listData = {
 				title: listTitleVal,
 				date: date,
@@ -232,7 +234,7 @@ $(function() {
 				itemFive: itemFiveVal,
 				thumbsUp: 0,
 				forks: 0,
-				author: "author name"
+				author: "author on the client side"
 			};
 
 			$.ajax({
