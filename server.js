@@ -6,13 +6,11 @@ var express = require("express"),
     // config = process.env || require('./config'),
     session = require('express-session');
 
-// mongoose.connect(
-//   process.env.MONGOLAB_URI ||
-//   process.env.MONGOHQ_URL ||
-//   "mongodb://localhost/top-5"
-// );
-
-mongoose.connect(process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || require('./config').MONGO_URI);
+mongoose.connect(
+  process.env.MONGOLAB_URI || 
+  process.env.MONGOHQ_URL || 
+  require('./config').MONGO_URI
+);
 
 var List = require('./models/list');
 var User = require('./models/user');
