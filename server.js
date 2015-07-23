@@ -73,7 +73,10 @@ app.get("/", function(req, res) {
 // Get all Lists
 app.get("/api/lists", function (req, res) {
 
+  console.log("i'm getting the lists")
+
   List.find({}).populate('author').exec(function (err, foundLists){
+    console.log(foundLists);
       res.json(foundLists);
    });
 
