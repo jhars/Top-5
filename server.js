@@ -11,6 +11,7 @@ mongoose.connect(
   process.env.MONGOHQ_URL ||
   "mongodb://localhost/top-5"
 );
+
 // mongoose.connect(config.MONGO_URI);
 
 var List = require('./models/list');
