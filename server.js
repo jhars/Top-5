@@ -3,16 +3,16 @@ var express = require("express"),
     app = express(),
     bodyParser = require("body-parser"),
     mongoose = require("mongoose"),
-    // config = require('config'),
+    config = require('./config'),
     session = require('express-session');
 
-mongoose.connect(
-  process.env.MONGOLAB_URI ||
-  process.env.MONGOHQ_URL ||
-  "mongodb://localhost/top-5"
-);
+// mongoose.connect(
+//   process.env.MONGOLAB_URI ||
+//   process.env.MONGOHQ_URL ||
+//   "mongodb://localhost/top-5"
+// );
 
-// mongoose.connect(config.MONGO_URI);
+mongoose.connect(config.MONGO_URI);
 
 var List = require('./models/list');
 var User = require('./models/user');
@@ -30,8 +30,8 @@ app.all("/*", function(req, res, next) {
 app.use(session({
   saveUninitialized: true,
   resave: true,
-  secret: 'SuperSecretCookie',
-  // secret: config.SESSION_SECRET,
+  // secret: 'SuperSecretCookie',
+  secret: config.SESSION_SECRET,
   cookie: { maxAge: 60000 }
 }));
 
@@ -221,13 +221,13 @@ app.delete("/api/lists/:id", function (req, res) {
 });
 
 // listen on port 3000
-app.listen(process.env.PORT || "3000", function () {
-  console.log("server started on localhost:3000");
-});
-
-// app.listen(config.PORT, function () {
+// app.listen(process.env.PORT || "3000", function () {
 //   console.log("server started on localhost:3000");
 // });
+
+app.listen(config.PORT, function () {
+  console.log("server started on localhost:3000");
+});
 
 
 
