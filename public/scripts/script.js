@@ -21,6 +21,54 @@ $(function() {
 
 	var editId;
 
+	// Check if user is logged in
+
+	// $.get('/api/me', function(data) {
+	// 	console.log(data);
+	// })
+
+	var loggedOut = function () {
+
+		$("#username").text("");
+		$("#sign-up-button").removeClass('hide');
+		$("#log-in-button").removeClass('hide');
+		$("#log-out-button").addClass('hide');
+		
+	}
+
+	var loggedIn = function () {
+
+		$("#sign-up-button").addClass('hide');
+		$("#log-in-button").addClass('hide');
+		$("#log-out-button").removeClass('hide');
+
+	}
+
+	$.ajax({
+		url: '/api/me',
+		type: "GET",
+		success: function (data) {
+
+			console.log("--> this should be the logded in user:");
+			console.log(data);
+
+			if (data) {
+
+				$("#username").text(data.username);
+				loggedIn();
+
+			} else {
+				loggedOut();
+			}
+
+		},
+		error: function () {
+
+			console.log("Error, could not GET username");
+		}
+	});
+
+
 	// - - - - - - - - - - PAGE LOAD - - - - - - - - - - //
 
 	$.ajax({
@@ -66,7 +114,12 @@ $(function() {
 			type: "POST",
 			data: newUserObj,
 			success: function (data) {
-				console.log("new user sent")
+				
+				console.log("--> this is new signed up user")
+				console.log(data);
+
+				$("#username").text(data.username);
+				loggedIn();
 			},
 			error: function () {
 				console.log("Error, could not post new User!");
@@ -101,13 +154,41 @@ $(function() {
 			url: '/login',
 			type: "POST",
 			data: loginUserObj,
-			sucess: function (data) {
+			success: function (data) {
+
+				console.log("--> this is logged in user")
+				console.log(data);
+
+				$("#username").text(data.username);
+				loggedIn();
 
 			},
 			error: function () {
-				alert("Error, could not test username")
+				console.log("Error, could not log in");
 			}
 		});
+	});
+
+	// - - - - - - - - - - LOG OUT - - - - - - - - - - //
+
+	$("#log-out-button").on('click', function (event) {
+		event.preventDefault();
+
+		console.log("you clicked the button!")
+
+		$.ajax({
+			url: '/logout',
+			type: 'GET',
+			success: function (data) {
+
+				loggedOut();
+
+			},
+			error: function () {
+
+			}
+		});
+
 	});
 
 	// - - - - - - - - - - NEW LIST - - - - - - - - - - //

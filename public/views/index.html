@@ -31,8 +31,10 @@
         </div>
 
         <form class="navbar-form navbar-right">
-            <a href="#" id="sign-up-button" data-toggle="modal" data-target="#sign-up-modal" title="Sign Up" data-placement="left" class="btn btn-default">Sign Up</a>
-            <a href="#" id="log-in-button" data-toggle="modal" data-target="#log-in-modal" title="Log In" data-placement="left" class="btn btn-primary">Log In</a>
+            <h3 id="username"></h3>
+            <a href="#" id="log-out-button" title="Sign Up" data-placement="left" class="btn btn-default hide">Log Out</a>
+            <a href="#" id="sign-up-button" data-toggle="modal" data-target="#sign-up-modal" title="Sign Up" data-placement="left" class="btn btn-default hide">Sign Up</a>
+            <a href="#" id="log-in-button" data-toggle="modal" data-target="#log-in-modal" title="Log In" data-placement="left" class="btn btn-primary hide">Log In</a>
         </form>
 
       </div>
@@ -90,11 +92,11 @@
             <div class="modal-body">
                 <div class="form-group">
                   <label for="log-in-email">Email address</label>
-                  <input type="email" class="form-control" id="log-in-email" placeholder="Email Address">
+                  <input type="email" name="user[email]" class="form-control" id="log-in-email" placeholder="Email Address">
                 </div>
                 <div class="form-group">
                   <label for="log-in-password">Password</label>
-                  <input type="password" class="form-control" id="log-in-password" placeholder="Password">
+                  <input type="password" name="user[password]" class="form-control" id="log-in-password" placeholder="Password">
                 </div>
             </div>
 

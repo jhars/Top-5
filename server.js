@@ -3,30 +3,43 @@ var express = require("express"),
     app = express(),
     bodyParser = require("body-parser"),
     mongoose = require("mongoose"),
+    config = require('./config'),
     session = require('express-session');
 
-mongoose.connect(
-  process.env.MONGOLAB_URI ||
-  process.env.MONGOHQ_URL ||
-  "mongodb://localhost/top-5"
-);
+// mongoose.connect(
+//   process.env.MONGOLAB_URI ||
+//   process.env.MONGOHQ_URL ||
+//   "mongodb://localhost/top-5"
+// );
+mongoose.connect(config.MONGO_URI);
 
 var List = require('./models/list');
 var User = require('./models/user');
+
+// tell app to use bodyParser middleware
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.static(__dirname + "/public"));
+
+app.all("/*", function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  next();
+});
 
 // set session options
 app.use(session({
   saveUninitialized: true,
   resave: true,
-  secret: 'SuperSecretCookie',
+  // secret: 'SuperSecretCookie',
+  secret: config.SESSION_SECRET,
   cookie: { maxAge: 60000 }
 }));
 
 // middleware to manage sessions
 app.use('/', function (req, res, next) {
+
   // saves userId in session for logged-in user
   req.login = function (user) {
-    req.session.userId = user.id;
+    req.session.userId = user._id;
   };
 
   // finds user currently logged in based on `session.userId`
@@ -42,20 +55,14 @@ app.use('/', function (req, res, next) {
     req.session.userId = null;
     req.user = null;
   };
-
   next();
 });
 
-app.all("/*", function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  next();
+app.get('/api/me', function (req, res){
+  User.findOne({_id: req.session.userId}).exec(function(err, user) {
+    res.json(user);
+  });
 });
-
-// tell app to use bodyParser middleware
-app.use(bodyParser.urlencoded({extended: true}));
-
-// serve js and css files from public folder
-app.use(express.static(__dirname + "/public"));
 
 // set up root route to respond with index.html
 app.get("/", function(req, res) {
@@ -79,42 +86,44 @@ app.get("/api/lists", function (req, res) {
 app.post('/api/users', function (req, res) {
 
   // grab user data from params (req.body)
-  var newUser = req.body;
+  // var newUser = req.body.user;
 
   // create new user with secure password
-  User.createSecure(newUser.email, newUser.username, newUser.password, function (err, user) {
-    console.log(user);
+  User.createSecure(req.body.email, req.body.username, req.body.password, function (err, user) {
+    req.login(user);
     res.send(user);
   });
 });
 
 //  - - - - - - - - LOG IN - - - - - - - //
 
-// user submits the login form
+// authenticate user and set session
 app.post('/login', function (req, res) {
 
-  // grab user data from params (req.body)
-  var userData = req.body;
+  // var newUser = req.body.user;
 
-  // call authenticate function to check if password user entered is correct
-  User.authenticate(userData.email, userData.password, function (err, user) {
-    // saves user id to session
+  User.authenticate(req.body.email, req.body.password, function (err, user) {
     req.login(user);
-
-    console.log("--> this is the user");
-    console.log(user.email);
-
-    // redirect to user profile
-    res.redirect('/profile');
+    res.json(user);
+    // res.redirect('/');
   });
+
 });
 
-// user profile page
+// // user profile page
 app.get('/profile', function (req, res) {
   // finds user currently logged in
   req.currentUser(function (err, user) {
-    res.send('Welcome ' + user.email);
+    res.send('Welcome');
   });
+});
+
+// - - - - - - - - - - LOG OUT - - - - - - - - - - //
+
+// log out user (destroy session)
+app.get('/logout', function (req, res) {
+  req.logout();
+  res.redirect('/');
 });
 
 //  - - - - - - - - Show Users - - - - - - - //
@@ -186,8 +195,20 @@ app.delete("/api/lists/:id", function (req, res) {
 });
 
 // listen on port 3000
-app.listen(process.env.PORT || 3000, function () {
+app.listen(config.PORT, function () {
   console.log("server started on localhost:3000");
 });
+
+
+
+
+
+
+
+
+
+
+
+
 
 

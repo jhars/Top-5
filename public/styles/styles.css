@@ -22,6 +22,24 @@ body {
 	right: 15px;
 }
 
+#username {
+	display: inline;
+	color: #fff;
+	font-size: 14px;
+}
+
+/*#sign-up-button {
+	display: none;
+}
+
+#log-in-button {
+	display: none;
+}*/
+
+/*#log-out-button {
+	display: none;
+}*/
+
 /* - - - - - LIST PANEL - - - -  */
 
 .row .panel {
