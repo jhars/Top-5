@@ -75,7 +75,7 @@ app.get("/", function(req, res) {
 // Get all Lists
 app.get("/api/lists", function (req, res) {
 
-  List.find({}).  ('author').exec(function (err, foundLists){
+  List.find({}).populate('author').exec(function (err, foundLists){
       res.json(foundLists);
    });
 
