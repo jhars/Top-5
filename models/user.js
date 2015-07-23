@@ -5,12 +5,14 @@ var mongoose = require('mongoose'),
   Schema = mongoose.Schema,
   bcrypt = require('bcrypt'),
   salt = bcrypt.genSaltSync(10);
+  List = require('./list');
 
 // define user schema
 var UserSchema = new Schema({
   email: String,
   username: String,
-  passwordDigest: String
+  passwordDigest: String,
+  lists: [list]
 });
 
 // create a new user with secure (hashed) password
