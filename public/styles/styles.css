@@ -52,15 +52,15 @@ body {
 /* - - - - - ALERTS - - - -  */
 
 #logged-in-success {
-	box-shadow: 0px 0px 2px 1px rgba(0,0,0,0.2);
+	box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.2);
 }
 
 #signed-in-success {
-	box-shadow: 0px 0px 2px 1px rgba(0,0,0,0.2);
+	box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.2);
 }
 
 #logged-out-warning {
-	box-shadow: 0px 0px 2px 1px rgba(0,0,0,0.2);
+	box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.2);
 }
 
 /* - - - - - LIST PANEL - - - -  */
