@@ -30,7 +30,7 @@ app.use(session({
   resave: true,
   // secret: 'SuperSecretCookie',
   secret: process.env.SESSION_SECRET || require('./config').SESSION_SECRET,
-  cookie: { maxAge: 60000 }
+  cookie: { maxAge: 600000 }
 }));
 
 // middleware to manage sessions
