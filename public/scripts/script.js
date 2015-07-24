@@ -397,19 +397,19 @@ $(function() {
 		$editNewListDate.text(editDate);
 
 		// find the items
-		var $editNewListItemOne = ($("> .list-group > .list-item-one", $editNewList));
+		var $editNewListItemOne = ($("> .list-group > .list-item-one-content", $editNewList));
 		$editNewListItemOne.text($("#edit-item-one-input").val());
 
-		var $editNewListItemTwo = ($("> .list-group > .list-item-two", $editNewList));
+		var $editNewListItemTwo = ($("> .list-group > .list-item-two-content", $editNewList));
 		$editNewListItemTwo.text($("#edit-item-two-input").val());
 
-		var $editNewListItemThree = ($("> .list-group > .list-item-three", $editNewList));
+		var $editNewListItemThree = ($("> .list-group > .list-item-three-content", $editNewList));
 		$editNewListItemThree.text($("#edit-item-three-input").val());
 
-		var $editNewListItemFour = ($("> .list-group > .list-item-four", $editNewList));
+		var $editNewListItemFour = ($("> .list-group > .list-item-four-content", $editNewList));
 		$editNewListItemFour.text($("#edit-item-four-input").val());
 
-		var $editNewListItemFive = ($("> .list-group > .list-item-five", $editNewList));
+		var $editNewListItemFive = ($("> .list-group > .list-item-five-content", $editNewList));
 		$editNewListItemFive.text($("#edit-item-five-input").val());
 
 		var editListObj = {
@@ -427,7 +427,9 @@ $(function() {
 			url: "/api/lists/" + editId,
 			type: "PUT",
 			data: editListObj,
-			success: function (data) {
+			success: function (returnedData) {
+
+				
 
 			},
 			error: function () {
