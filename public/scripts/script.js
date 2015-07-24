@@ -261,6 +261,8 @@ $(function() {
 					$($(".edit-list-button")[i]).addClass('hide');
 				}
 
+				$("#logged-in-success").addClass('hide');
+				$("#signed-in-success").addClass('hide');
 				$("#logged-out-warning").removeClass('hide');
 				loggedOut();
 
@@ -397,19 +399,19 @@ $(function() {
 		$editNewListDate.text(editDate);
 
 		// find the items
-		var $editNewListItemOne = ($("> .list-group > .list-item-one-content", $editNewList));
+		var $editNewListItemOne = ($("> .list-group > .list-item-one > .list-item-one-content", $editNewList));
 		$editNewListItemOne.text($("#edit-item-one-input").val());
 
-		var $editNewListItemTwo = ($("> .list-group > .list-item-two-content", $editNewList));
+		var $editNewListItemTwo = ($("> .list-group > .list-item-two > .list-item-two-content", $editNewList));
 		$editNewListItemTwo.text($("#edit-item-two-input").val());
 
-		var $editNewListItemThree = ($("> .list-group > .list-item-three-content", $editNewList));
+		var $editNewListItemThree = ($("> .list-group > .list-item-three > .list-item-three-content", $editNewList));
 		$editNewListItemThree.text($("#edit-item-three-input").val());
 
-		var $editNewListItemFour = ($("> .list-group > .list-item-four-content", $editNewList));
+		var $editNewListItemFour = ($("> .list-group > .list-item-four > .list-item-four-content", $editNewList));
 		$editNewListItemFour.text($("#edit-item-four-input").val());
 
-		var $editNewListItemFive = ($("> .list-group > .list-item-five-content", $editNewList));
+		var $editNewListItemFive = ($("> .list-group > .list-item-five > .list-item-five-content", $editNewList));
 		$editNewListItemFive.text($("#edit-item-five-input").val());
 
 		var editListObj = {
@@ -429,7 +431,7 @@ $(function() {
 			data: editListObj,
 			success: function (returnedData) {
 
-				
+
 
 			},
 			error: function () {
