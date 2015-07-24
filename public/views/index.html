@@ -38,8 +38,26 @@
         </form>
 
       </div>
-
     </nav>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-offset-2 col-md-8">
+          <div id="logged-in-success" class="alert alert-success alert-dismissible fade in hide" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Welcome!</strong> You are logged in now!
+          </div>
+          <div id="signed-in-success" class="alert alert-success alert-dismissible fade in hide" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Welcome!</strong> You are signed in now, start writing some posts!
+          </div>
+          <div id="logged-out-warning" class="alert alert-danger alert-dismissible fade in hide" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Goodbye!</strong> You are logged out. We hope to see you again soon!
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Sign Up Modal -->
     <div id="sign-up-modal" class="modal fade">

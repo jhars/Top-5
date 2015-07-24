@@ -5,6 +5,10 @@ $(function() {
 	// Tooltips
 	$('[data-toggle="tooltip"]').tooltip()
 
+	$("#logged-in-success").addClass('hide');
+	$("#logged-out-warning").addClass('hide');
+	$("#signed-in-success").addClass('hide');
+
 	var listTemplate = _.template($("#list-template").html());
 
 	$("#sign-up-email").prop('required', true);
@@ -37,7 +41,7 @@ $(function() {
 		$("#log-in-button").removeClass('hide');
 		$("#log-out-button").addClass('hide');
 		$("#new-list-button").attr( "disabled", "disabled" );
-		$("#logged-out-help").removeClass('hide');
+		$("#logged-out-help").hide();
 		
 	}
 
@@ -168,6 +172,7 @@ $(function() {
 
 				$("#username").text(data.username);
 
+				$("#signed-in-success").removeClass('hide');
 				loggedIn();
 
 				$("#username").text(data.username);
@@ -228,6 +233,8 @@ $(function() {
 
 				$("#username").text(data.username);
 
+				$("#logged-in-success").removeClass('hide');
+
 				loggedIn();
 
 			},
@@ -254,6 +261,7 @@ $(function() {
 					$($(".edit-list-button")[i]).addClass('hide');
 				}
 
+				$("#logged-out-warning").removeClass('hide');
 				loggedOut();
 
 			},
