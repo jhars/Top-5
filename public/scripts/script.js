@@ -41,7 +41,6 @@ $(function() {
 		$("#log-in-button").removeClass('hide');
 		$("#log-out-button").addClass('hide');
 		$("#new-list-button").attr( "disabled", "disabled" );
-		$("#logged-out-help").hide();
 		
 	}
 
@@ -51,7 +50,6 @@ $(function() {
 		$("#log-in-button").addClass('hide');
 		$("#log-out-button").removeClass('hide');
 		$("#new-list-button").attr( "disabled", false );
-		$("#logged-out-help").addClass('hide');
 	}
 
 	// - - - - - - - - - - PAGE LOAD - - - - - - - - - - //
@@ -97,6 +95,8 @@ $(function() {
 
 					}
 
+					$("#logged-out-help").addClass('hide');
+
 					$("#username").text(data.username);
 
 					loggedIn();
@@ -107,6 +107,8 @@ $(function() {
 
 						$($(".edit-list-button")[i]).addClass('hide');
 					}
+
+					$("#logged-out-help").removeClass('hide');
 
 					loggedOut();
 				}
@@ -170,6 +172,8 @@ $(function() {
 
 				}
 
+				$("#logged-out-help").hide();
+
 				$("#username").text(data.username);
 
 				$("#signed-in-success").removeClass('hide');
@@ -231,6 +235,11 @@ $(function() {
 
 				}
 
+				console.log("--> trying to hide this:")
+				console.log($("#logged-out-help"));
+
+				$("#logged-out-help").addClass('hide');
+
 				$("#username").text(data.username);
 
 				$("#logged-in-success").removeClass('hide');
@@ -264,6 +273,7 @@ $(function() {
 				$("#logged-in-success").addClass('hide');
 				$("#signed-in-success").addClass('hide');
 				$("#logged-out-warning").removeClass('hide');
+				$("#logged-out-help").removeClass('hide');
 				loggedOut();
 
 			},
