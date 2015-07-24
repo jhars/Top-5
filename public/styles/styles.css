@@ -22,10 +22,18 @@ body {
 	right: 15px;
 }
 
+#new-list-group {
+	position: fixed;
+	bottom: 45px;
+	right: 35px;
+	font-size: 12px;
+}
+
 #username {
 	display: inline;
 	color: #fff;
 	font-size: 14px;
+	margin-right: 6px;
 }
 
 /*#sign-up-button {

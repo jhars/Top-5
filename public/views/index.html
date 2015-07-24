@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Mongo & Node Seed</title>
+    <title>My Top 5</title>
 
     <!-- STYLES -->
     <!-- Bootstrap CSS -->
@@ -26,7 +26,7 @@
 
         <div class="navbar-header">
           <a class="navbar-brand" href="#">
-            Mongo & Node-Seed
+            My Top 5
           </a>
         </div>
 
@@ -110,9 +110,19 @@
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
-    <button type="button" data-toggle="modal" data-target="#add-list-modal" class="btn btn-primary" id="new-list-button">
-      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> &nbspNew Top 5
-    </button>
+
+
+    <!-- New List -->
+    <div id="new-list-group">
+      <p id="logged-out-help" class="help-block"><a href="#" data-toggle="modal" data-target="#log-in-modal">Log In</a> to Post</p>
+      <div data-toggle="modal" data-target="#add-list-modal">
+        <button type="button" data-toggle="tooltip" title="Add New List" data-placement="top" class="btn btn-primary" id="new-list-button">
+          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> &nbspNew Top 5
+        </button> 
+      </div>
+    </div>
+    
+
 
     <!-- List Forms Modal -->
     <div class="container">

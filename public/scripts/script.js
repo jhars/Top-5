@@ -2,6 +2,9 @@ $(function() {
 
 	var $listsContainer = $("#list-container");
 
+	// Tooltips
+	$('[data-toggle="tooltip"]').tooltip()
+
 	var listTemplate = _.template($("#list-template").html());
 
 	$("#sign-up-email").prop('required', true);
@@ -33,6 +36,8 @@ $(function() {
 		$("#sign-up-button").removeClass('hide');
 		$("#log-in-button").removeClass('hide');
 		$("#log-out-button").addClass('hide');
+		$("#new-list-button").attr( "disabled", "disabled" );
+		$("#logged-out-help").removeClass('hide');
 		
 	}
 
@@ -41,33 +46,9 @@ $(function() {
 		$("#sign-up-button").addClass('hide');
 		$("#log-in-button").addClass('hide');
 		$("#log-out-button").removeClass('hide');
-
+		$("#new-list-button").attr( "disabled", false );
+		$("#logged-out-help").addClass('hide');
 	}
-
-	$.ajax({
-		url: '/api/me',
-		type: "GET",
-		success: function (data) {
-
-			console.log("--> this should be the logded in user:");
-			console.log(data);
-
-			if (data) {
-
-				$("#username").text(data.username);
-				loggedIn();
-
-			} else {
-				loggedOut();
-			}
-
-		},
-		error: function () {
-
-			console.log("Error, could not GET username");
-		}
-	});
-
 
 	// - - - - - - - - - - PAGE LOAD - - - - - - - - - - //
 
@@ -80,8 +61,60 @@ $(function() {
 				$listsContainer.prepend(listTemplate(foundList));
 			});
 
+			checkUser();
+
 		}
 	});
+
+	var checkUser = function() {
+
+		$.ajax({
+			url: '/api/me',
+			type: "GET",
+			success: function (data) {
+
+				console.log("--> this should be the logded in user:");
+				console.log(data);
+
+				if (data) {
+
+					for (i = 0; i < $(".edit-list-button").length; i++) {
+
+						var pencil = $(".edit-list-button")[i];
+
+						$(pencil).addClass('hide');
+
+						var panel = pencil.closest(".panel");
+						var panelId = $(panel).data("id");
+
+						if (data.lists.indexOf(panelId) > -1) {
+							$(pencil).removeClass('hide');
+						}
+
+					}
+
+					$("#username").text(data.username);
+
+					loggedIn();
+
+				} else {
+
+					for (i = 0; i < $(".edit-list-button").length; i++) {
+
+						$($(".edit-list-button")[i]).addClass('hide');
+					}
+
+					loggedOut();
+				}
+
+			},
+			error: function () {
+
+				console.log("Error, could not GET username");
+			}
+		});
+
+	}
 
 	// - - - - - - - - - - SIGN UP - - - - - - - - - - //
 
@@ -117,6 +150,25 @@ $(function() {
 				
 				console.log("--> this is new signed up user")
 				console.log(data);
+
+				for (i = 0; i < $(".edit-list-button").length; i++) {
+
+					var pencil = $(".edit-list-button")[i];
+
+					$(pencil).addClass('hide');
+
+					var panel = pencil.closest(".panel");
+					var panelId = $(panel).data("id");
+
+					if (data.lists.indexOf(panelId) > -1) {
+						$(pencil).removeClass('hide');
+					}
+
+				}
+
+				$("#username").text(data.username);
+
+				loggedIn();
 
 				$("#username").text(data.username);
 				loggedIn();
@@ -159,7 +211,23 @@ $(function() {
 				console.log("--> this is logged in user")
 				console.log(data);
 
+				for (i = 0; i < $(".edit-list-button").length; i++) {
+
+					var pencil = $(".edit-list-button")[i];
+
+					$(pencil).addClass('hide');
+
+					var panel = pencil.closest(".panel");
+					var panelId = $(panel).data("id");
+
+					if (data.lists.indexOf(panelId) > -1) {
+						$(pencil).removeClass('hide');
+					}
+
+				}
+
 				$("#username").text(data.username);
+
 				loggedIn();
 
 			},
@@ -180,6 +248,11 @@ $(function() {
 			url: '/logout',
 			type: 'GET',
 			success: function (data) {
+
+				for (i = 0; i < $(".edit-list-button").length; i++) {
+
+					$($(".edit-list-button")[i]).addClass('hide');
+				}
 
 				loggedOut();
 
