@@ -102,8 +102,13 @@ app.post('/login', function (req, res) {
   // var newUser = req.body.user;
 
   User.authenticate(req.body.email, req.body.password, function (err, user) {
-    req.login(user);
-    res.json(user);
+    if(err == null) {
+      req.login(user);
+      res.send(user);
+    } else {
+      console.log('error');
+      res.send('error');
+    }
     // res.redirect('/');
   });
 

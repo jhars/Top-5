@@ -47,11 +47,13 @@ UserSchema.statics.authenticate = function (email, password, callback) {
 
     // throw error if can't find user
     if (user === null) {
-      throw new Error('Can\'t find user with that email');
+      callback('1', user);
 
     // if found user, check if password is correct
     } else if (user.checkPassword(password)) {
       callback(null, user);
+    } else {
+      callback('1', user);
     }
   });
 };

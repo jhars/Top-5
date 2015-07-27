@@ -209,45 +209,58 @@ $(function() {
 			password: $("#log-in-password").val()
 		}
 
-		$("#log-in-modal").modal("hide");
-
 		$.ajax({
 			url: '/login',
 			type: "POST",
 			data: loginUserObj,
 			success: function (data) {
+				if (data == 'error') {
+					$("#log-in-email").val('');
+					$("#log-in-password").val('');
+					$("#log-in-email").focus();
+					$('#login-err-msg').html('Invalid Email/Password, Please Re-Enter!');
 
-				console.log("--> this is logged in user")
-				console.log(data);
+					console.log("Error, could not log in");
+				} else {
+					$('#login-err-msg').html('');
+					$("#log-in-modal").modal("hide");
 
-				for (i = 0; i < $(".edit-list-button").length; i++) {
+					console.log("--> this is logged in user")
+					console.log(data);
 
-					var pencil = $(".edit-list-button")[i];
+					for (i = 0; i < $(".edit-list-button").length; i++) {
 
-					$(pencil).addClass('hide');
+						var pencil = $(".edit-list-button")[i];
 
-					var panel = pencil.closest(".panel");
-					var panelId = $(panel).data("id");
+						$(pencil).addClass('hide');
 
-					if (data.lists.indexOf(panelId) > -1) {
-						$(pencil).removeClass('hide');
+						var panel = pencil.closest(".panel");
+						var panelId = $(panel).data("id");
+
+						if (data.lists.indexOf(panelId) > -1) {
+							$(pencil).removeClass('hide');
+						}
+
 					}
 
+					console.log("--> trying to hide this:")
+					console.log($("#logged-out-help"));
+
+					$("#logged-out-help").addClass('hide');
+
+					$("#username").text(data.username);
+
+					$("#logged-in-success").removeClass('hide');
+
+					loggedIn();
 				}
-
-				console.log("--> trying to hide this:")
-				console.log($("#logged-out-help"));
-
-				$("#logged-out-help").addClass('hide');
-
-				$("#username").text(data.username);
-
-				$("#logged-in-success").removeClass('hide');
-
-				loggedIn();
 
 			},
 			error: function () {
+				$("#log-in-email").val('');
+				$("#log-in-password").val('');
+				$('#login-err-msg').html('Invalid Email/Password, Please Re-Enter!');
+
 				console.log("Error, could not log in");
 			}
 		});
